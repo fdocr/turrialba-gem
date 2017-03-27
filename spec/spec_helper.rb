@@ -1,5 +1,6 @@
 require "bundler/setup"
 require "turrialba"
+require "json"
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
@@ -8,4 +9,13 @@ RSpec.configure do |config|
   config.expect_with :rspec do |c|
     c.syntax = :expect
   end
+end
+
+def fixture_path
+  File.expand_path('../fixtures', __FILE__)
+end
+
+def fixture(file)
+  fixture_string = IO.read(fixture_path + '/' + file)
+  JSON.parse(JSON.parse(fixture_string))
 end
