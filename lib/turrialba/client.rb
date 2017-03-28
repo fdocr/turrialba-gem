@@ -28,7 +28,15 @@ module Turrialba
     end
 
     def tweet(id_str)
-      self.class.get("/tweet/#{id_str}", @options)
+      response = self.class.get("/tweet/#{id_str}", headers: @auth_header)
+      Tweet.new(response.parsed_response)
+    end
+
+    def put_tweet(uid, hash)
+      response = self.class.put("/user/#{uid}/tweet/#{hash['id_str']}",
+                                  body: filter_tweet_params(hash),
+                                  headers: @auth_header)
+      Tweet.new(response.parsed_response)
     end
 
     private
@@ -41,6 +49,14 @@ module Turrialba
         "scrapping_queued_at", "scrapping_request_count", "scrapped_at",
         "possessed_at", "possession_group", "queue_rate_pause",
         "total_scrapping_request_count"]
+      hash.select {|k,v| valid_params.include?(k) }
+    end
+
+    def filter_tweet_params(hash)
+      valid_params = ["id_str", "text", "tweeted_at", "embedded_html",
+        "author_id", "in_reply_to_tweet_id", "scrapping_queued_at",
+        "scrapping_request_count", "scrapped_at", "favorite_count",
+        "retweet_count", "in_reply_to_user_id", "total_scrapping_request_count"]
       hash.select {|k,v| valid_params.include?(k) }
     end
   end
