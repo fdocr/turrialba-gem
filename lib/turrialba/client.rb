@@ -39,6 +39,24 @@ module Turrialba
       Tweet.new(response.parsed_response)
     end
 
+    def put_favorite(uid, id_str)
+      response = self.class.put("/user/#{uid}/favorite/#{id_str}",
+                                  headers: @auth_header)
+      response.code == 200
+    end
+
+    def put_retweet(uid, id_str)
+      response = self.class.put("/user/#{uid}/retweet/#{id_str}",
+                                  headers: @auth_header)
+      response.code == 200
+    end
+
+    def put_follower_connection(uid, follower_uid)
+      response = self.class.put("/user/#{uid}/follows/#{follower_uid}/",
+                                  headers: @auth_header)
+      response.code == 200
+    end
+
     private
     def filter_user_params(hash)
       valid_params = ["screen_name", "name", "location", "description",

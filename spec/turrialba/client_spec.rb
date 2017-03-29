@@ -32,4 +32,22 @@ RSpec.describe Turrialba::Client do
     tweet = client.tweet('834171388806180865')
     expect(tweet.id_str).to eq('834171388806180865')
   end
+
+  it "puts a favorite connection user->tweet" do
+    client = Turrialba::Client.new
+    success = client.put_favorite('2436389418', '834171388806180865')
+    expect(success).to be true
+  end
+
+  it "puts a retweet connection user->tweet" do
+    client = Turrialba::Client.new
+    success = client.put_retweet('2436389418', '834171388806180865')
+    expect(success).to be true
+  end
+
+  it "puts a follower connection user->user" do
+    client = Turrialba::Client.new
+    success = client.put_follower_connection('360962402', '2436389418')
+    expect(success).to be true
+  end
 end
