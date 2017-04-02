@@ -27,6 +27,8 @@ client = Turrialba::Client.new
 user = client.user(360962402) # Fetches a user by uid
 ```
 
+By default, the server authenticates requests using a `X-AUTH-TOKEN` header. Defaults are set for server url (`localhost:3000`) and auth token (`hashlol`). A custom server url will need to be set using `TURRIALBA_URL` ENV variable. You can initialize the Client with a custom auth token.
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
