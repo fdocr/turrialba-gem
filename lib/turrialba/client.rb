@@ -23,7 +23,7 @@ module Turrialba
     end
 
     def next_possessed_user
-      response = self.class.get("/next_possesed_user", headers: @auth_header)
+      response = self.class.get("/next_possessed_user", headers: @auth_header)
       User.new(response.parsed_response)
     end
 
