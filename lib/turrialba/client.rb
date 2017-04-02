@@ -5,8 +5,8 @@ module Turrialba
     include HTTParty
     base_uri ENV['TURRIALBA_URL'] || 'http://localhost:3000'
 
-    def initialize(auth_token = nil)
-      @auth_header = { 'X-AUTH-TOKEN': auth_token || 'hashlol' }
+    def initialize(auth_token = 'hashlol')
+      @auth_header = { 'X-AUTH-TOKEN': auth_token }
     end
 
     def user(uid)
