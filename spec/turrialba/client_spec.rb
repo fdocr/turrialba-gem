@@ -23,7 +23,7 @@ RSpec.describe Turrialba::Client do
   it "puts a tweet" do
     client = Turrialba::Client.new
     tweet_json = fixture('tweet.json')
-    tweet = client.put_tweet(tweet_json['user']['id'], tweet_json)
+    tweet = client.put_tweet(tweet_json[:user][:id], tweet_json)
     expect(tweet.id_str).to eq('834171388806180865')
   end
 

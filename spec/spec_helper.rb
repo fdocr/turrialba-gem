@@ -17,5 +17,5 @@ end
 
 def fixture(file)
   fixture_string = IO.read(fixture_path + '/' + file)
-  JSON.parse(JSON.parse(fixture_string))
+  JSON.parse(JSON.parse(fixture_string), symbolize_names: true)
 end
