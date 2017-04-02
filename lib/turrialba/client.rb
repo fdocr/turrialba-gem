@@ -15,7 +15,7 @@ module Turrialba
     end
 
     def put_user(hash)
-      uid = hash['uid'] || hash['id_str']
+      uid = hash[:uid] || hash[:id_str]
       response = self.class.put("/user/#{uid}",
                                   body: filter_user_params(hash),
                                   headers: @auth_header)
@@ -33,7 +33,7 @@ module Turrialba
     end
 
     def put_tweet(uid, hash)
-      response = self.class.put("/user/#{uid}/tweet/#{hash['id_str']}",
+      response = self.class.put("/user/#{uid}/tweet/#{hash[:id_str]}",
                                   body: filter_tweet_params(hash),
                                   headers: @auth_header)
       Tweet.new(response.parsed_response)
