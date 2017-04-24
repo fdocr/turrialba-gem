@@ -27,6 +27,22 @@ RSpec.describe Turrialba::Client do
     expect(tweet.id_str).to eq('834171388806180865')
   end
 
+  it "puts a tweet distribution" do
+    client = Turrialba::Client.new
+    tweet_json = fixture('tweet.json')
+
+    distribution = { 0 => 5, 50 => 4, 100 => 3, 200 => 2, 400 => 1 }
+    new_data = {
+      followers: distribution,
+      following: distribution,
+      favorites: distribution,
+      statuses: distribution,
+    }
+
+    distribution = client.post_tweet_distribution(tweet_json[:id_str], 'retweets', 60*60, new_data)
+    expect(distribution).to be true
+  end
+
   it "fetches a tweet by id (id_str)" do
     client = Turrialba::Client.new
     tweet = client.tweet('834171388806180865')

@@ -39,6 +39,20 @@ module Turrialba
       Tweet.new(response.parsed_response)
     end
 
+    def post_tweet_distribution(id_str, source, mining_cost, distribution)
+      response = self.class.post("/tweet/#{id_str}/distribution",
+                                  body: {
+                                    source: source,
+                                    mining_cost: mining_cost,
+                                    followers: distribution[:followers].to_json,
+                                    following: distribution[:following].to_json,
+                                    favorites: distribution[:favorites].to_json,
+                                    statuses: distribution[:statuses].to_json
+                                  },
+                                  headers: @auth_header)
+      response.code == 200
+    end
+
     def put_favorite(uid, id_str)
       response = self.class.put("/user/#{uid}/favorite/#{id_str}",
                                   headers: @auth_header)
