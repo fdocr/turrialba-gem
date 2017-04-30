@@ -13,6 +13,29 @@ RSpec.describe Turrialba::Client do
     expect(user.uid).to eq('2436389418')
   end
 
+  it "posts a user distribution" do
+    client = Turrialba::Client.new
+    uid = 360962402
+
+    distribution = { 0 => 5, 50 => 4, 100 => 3, 200 => 2, 400 => 1 }
+    favorites_data = {
+      followers: distribution,
+      following: distribution,
+      favorites: distribution,
+      statuses: distribution,
+    }
+    retweets_data = {
+      favorites: distribution,
+      retweets: distribution
+    }
+
+    distribution = client.post_user_distribution(uid, 'favorites', 60*60, favorites_data)
+    expect(distribution).to be true
+
+    distribution = client.post_user_distribution(uid, 'retweets', 60*60, retweets_data)
+    expect(distribution).to be true
+  end
+
   it "fetches the next user to be possessed" do
     client = Turrialba::Client.new
     user = client.next_possessed_user
@@ -27,7 +50,7 @@ RSpec.describe Turrialba::Client do
     expect(tweet.id_str).to eq('834171388806180865')
   end
 
-  it "puts a tweet distribution" do
+  it "posts a tweet distribution" do
     client = Turrialba::Client.new
     tweet_json = fixture('tweet.json')
 

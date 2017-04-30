@@ -22,6 +22,21 @@ module Turrialba
       User.new(response.parsed_response)
     end
 
+    def post_user_distribution(uid, source, mining_cost, distribution)
+      params = {
+        source: source,
+        mining_cost: mining_cost,
+      }
+      params[:followers] = distribution[:followers].to_json if !distribution[:followers].nil?
+      params[:following] = distribution[:following].to_json if !distribution[:following].nil?
+      params[:favorites] = distribution[:favorites].to_json if !distribution[:favorites].nil?
+      params[:statuses] = distribution[:statuses].to_json if !distribution[:statuses].nil?
+      params[:retweets] = distribution[:retweets].to_json if !distribution[:retweets].nil?
+
+      response = self.class.post("/user/#{uid}/distribution", body: params, headers: @auth_header)
+      response.code == 200
+    end
+
     def next_possessed_user
       response = self.class.get("/next_possessed_user", headers: @auth_header)
       User.new(response.parsed_response)
