@@ -96,7 +96,10 @@ module Turrialba
         :scrapping_queued_at, :scrapping_request_count, :scrapped_at,
         :possessed_at, :possession_group, :queue_rate_pause,
         :total_scrapping_request_count]
-      hash.select {|k,v| valid_params.include?(k) }
+      hash.select {|k,v| valid_params.include?(k)}
+
+      # Remove Unicode NULL character from Strings (it makes Postgres cry)
+      hash.transform_values! {|v| v.class == String ? v.gsub("\u0000", "") : v}
     end
 
     def filter_tweet_params(hash)
@@ -104,7 +107,10 @@ module Turrialba
         :author_id, :in_reply_to_tweet_id, :scrapping_queued_at,
         :scrapping_request_count, :scrapped_at, :favorite_count,
         :retweet_count, :in_reply_to_user_id, :total_scrapping_request_count]
-      hash.select {|k,v| valid_params.include?(k) }
+      hash.select {|k,v| valid_params.include?(k)}
+
+      # Remove Unicode NULL character from Strings (it makes Postgres cry)
+      hash.transform_values! {|v| v.class == String ? v.gsub("\u0000", "") : v}
     end
   end
 end
