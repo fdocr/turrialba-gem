@@ -7,6 +7,12 @@ RSpec.describe Turrialba::Client do
     expect(user.screen_name).to eq('fdoxyz')
   end
 
+  it "fetches a user by username" do
+    client = Turrialba::Client.new
+    user = client.username('fdoxyz')
+    expect(user.uid).to eq('360962402')
+  end
+
   it "puts a user" do
     client = Turrialba::Client.new
     user = client.put_user(fixture('user.json'))

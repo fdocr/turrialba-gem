@@ -14,6 +14,11 @@ module Turrialba
       User.new(response.parsed_response)
     end
 
+    def username(screen_name)
+      response = self.class.get("/user/#{screen_name}/username", headers: @auth_header)
+      User.new(response.parsed_response)
+    end
+
     def put_user(hash)
       uid = hash[:uid] || hash[:id_str]
       response = self.class.put("/user/#{uid}",
