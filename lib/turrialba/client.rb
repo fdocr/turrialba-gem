@@ -39,7 +39,11 @@ module Turrialba
 
     def next_possessed_user
       response = self.class.get("/next_possessed_user", headers: @auth_header)
-      User.new(response.parsed_response)
+      if response.code == 200
+        User.new(response.parsed_response)
+      else
+        nil
+      end
     end
 
     def tweet(id_str)
