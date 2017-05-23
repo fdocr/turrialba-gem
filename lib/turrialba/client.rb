@@ -3,10 +3,10 @@ require 'httparty'
 module Turrialba
   class Client
     include HTTParty
-    base_uri ENV['TURRIALBA_URL'] || 'http://localhost:3000'
 
-    def initialize(auth_token = 'hashlol')
-      @auth_header = { 'X-AUTH-TOKEN': auth_token }
+    def initialize(options={})
+      self.class.base_uri options[:turrialba_url] || "http://localhost:3000"
+      @auth_header = { 'X-AUTH-TOKEN': options[:auth_token] || 'hashlol' }
     end
 
     def user(uid)
